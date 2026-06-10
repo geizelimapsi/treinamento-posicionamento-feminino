@@ -527,6 +527,198 @@
   </a>
 </section>
 
+<style>
+  /* ── CONFIRMATION OVERLAY ── */
+  .confirm-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(10, 8, 24, 0.97);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    animation: fadeInOverlay 0.5s ease;
+  }
+  .confirm-overlay.active {
+    display: flex;
+  }
+  @keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .confirm-card {
+    max-width: 520px;
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(200,160,240,0.25);
+    border-radius: 28px;
+    padding: 52px 40px 44px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: slideUpCard 0.5s cubic-bezier(.22,.68,0,1.2) 0.1s both;
+  }
+  @keyframes slideUpCard {
+    from { opacity: 0; transform: translateY(40px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* glow blob */
+  .confirm-card::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(107,47,217,0.35) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .confirm-icon {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, #2D5A3D, #4A9060);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    box-shadow: 0 0 40px rgba(74,144,96,0.45);
+    font-size: 2rem;
+    animation: popIn 0.4s cubic-bezier(.22,.68,0,1.5) 0.4s both;
+  }
+  @keyframes popIn {
+    from { transform: scale(0); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+
+  .confirm-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #4A9060;
+    margin-bottom: 14px;
+  }
+
+  .confirm-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.7rem, 4vw, 2.3rem);
+    font-weight: 900;
+    color: #FFFFFF;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .confirm-title em {
+    font-style: italic;
+    color: #C9A8E8;
+  }
+
+  .confirm-divider {
+    width: 48px; height: 2px;
+    background: linear-gradient(90deg, #6B2FD9, #C9A8E8);
+    border-radius: 2px;
+    margin: 20px auto;
+  }
+
+  .confirm-text {
+    font-size: 1.05rem;
+    color: #A0A0C0;
+    line-height: 1.65;
+    margin-bottom: 10px;
+  }
+  .confirm-text strong {
+    color: #E8D5F5;
+    font-weight: 600;
+  }
+
+  .confirm-highlight {
+    background: rgba(107,47,217,0.15);
+    border: 1px solid rgba(200,160,240,0.25);
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 0.9rem;
+    color: #C9A8E8;
+    margin: 18px 0 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .confirm-whatsapp-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #25D366, #128C4A);
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 14px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    box-shadow: 0 8px 40px rgba(37,211,102,0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+    letter-spacing: 0.01em;
+    position: relative;
+    overflow: hidden;
+  }
+  .confirm-whatsapp-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1));
+    pointer-events: none;
+  }
+  .confirm-whatsapp-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 50px rgba(37,211,102,0.55);
+  }
+  .confirm-whatsapp-btn svg {
+    width: 26px; height: 26px;
+    flex-shrink: 0;
+  }
+
+  .confirm-micro {
+    margin-top: 16px;
+    font-size: 0.75rem;
+    color: #6B6B8A;
+  }
+
+  @media (max-width: 480px) {
+    .confirm-card { padding: 40px 22px 36px; }
+    .confirm-title { font-size: 1.6rem; }
+  }
+</style>
+
+<!-- CONFIRMATION OVERLAY -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-card">
+    <div class="confirm-icon">✓</div>
+    <p class="confirm-eyebrow">Inscrição realizada com sucesso</p>
+    <h2 class="confirm-title">Sua vaga está<br><em>confirmada!</em> 🎉</h2>
+    <div class="confirm-divider"></div>
+    <p class="confirm-text">
+      Para que eu te envie o <strong>link de acesso ao treinamento</strong>,<br>
+      envie uma mensagem agora mesmo pelo WhatsApp<br>clicando no botão abaixo.
+    </p>
+    <div class="confirm-highlight">
+      📅 &nbsp;Treinamento ao vivo — <strong>20 de junho às 17h</strong>
+    </div>
+    <a class="confirm-whatsapp-btn" href="https://w.app/geizelima" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Enviar mensagem no WhatsApp →
+    </a>
+    <p class="confirm-micro">Você será redirecionada para o WhatsApp da Geize Lima</p>
+  </div>
+</div>
+
 <script>
 async function handleSubmit() {
   const nome = document.getElementById('nome').value.trim();
@@ -551,15 +743,13 @@ async function handleSubmit() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nome, email, whatsapp })
     });
-
-    btn.textContent = '✅ Inscrição confirmada! Até dia 20.';
-    btn.style.background = 'linear-gradient(135deg, #2D5A3D, #4A9060)';
-
   } catch (err) {
-    btn.textContent = 'Erro ao enviar. Tente novamente.';
-    btn.style.background = '#8B0000';
-    btn.disabled = false;
+    // silently continue — show confirmation regardless
   }
+
+  // Show confirmation overlay
+  document.getElementById('confirmOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
 </script>
 
